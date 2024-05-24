@@ -197,6 +197,9 @@
         margin-bottom: 20px;
 
     }
+    .squeezedBar .exit img {
+        display: none;
+    }
     .fullpage-container {
         padding-left: 4%;
     }
@@ -223,16 +226,47 @@
             margin-bottom: 20px;
 
         }
-    }
-    @media screen and (max-width: 100px) {
-        .list-container .database {
-            width: 60%;
-        }
-        .profile-info .user-pic {
-            width: 20px;
-            margin: 0px;
+        .profile-info h2{
+            font-size: 14px;
             margin-bottom: 20px;
-
+        }
+        .text-center {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        nav {
+            padding: 10px 5%;
+        }
+    }
+    @media screen and (max-width: 600px) {
+        .list-container .database {
+            width: 90%;
+        }
+        .squeezedBar .profile-info .user-pic {
+            display: none;
+        }
+        .button-container {
+            flex-direction: column;
+            align-items: flex-start; 
+        }
+    
+        .button-container form {
+            margin-bottom: 20px; 
+        }
+    
+        .button-container input[type="text"] {
+            width: 100%; 
+            margin-right: 0;
+        }
+    
+        .button-container .buttons {
+            width: auto; 
+        }
+        .profile-info h2{
+            display: none;
+        }
+        .text-center {
+            display: none;
         }
     }
 </style>
@@ -253,7 +287,7 @@
     <div class="leftbar">
         <div class = "profile-info">
             <h2 class="text-center">Profile Information</h2>
-            <img src="static/profpic.png" class="user-pic">
+            <img src="static/profile_user.png" class="user-pic">
             <p>Name: {{ current_name }}</p>
             <p>Email: {{ current_email }} </p>
         </div>

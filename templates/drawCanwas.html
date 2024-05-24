@@ -31,8 +31,9 @@
     z-index: 10;
   }
   .nav-left .logo-pic {
-    width: 100px;
-    margin-left: 20px;
+    width: 130px;
+    margin-left: 10px;
+    margin-bottom: 2px;
   }
   .nav-right img{
       width: 25px;
@@ -46,6 +47,12 @@
   .nav-left .menu-pic {
       width: 22px;
       margin-right: 25px;
+  }
+  .nav-left a p{
+    font-size: 25px;
+  }
+  .nav-left a:hover {
+    text-decoration: underline;
   }
   .container {
     background-color: #1b1b1b;
@@ -70,7 +77,6 @@
   .list-container .drawing-tool p{
       color: #000000;
   }
-    /* Скрываем текст внутри input type="file" */
     input[type="file"] {
       display: none;
     }
@@ -112,11 +118,32 @@
   }
   a {
     text-decoration: none;
-}
-.tools-container button:hover,
-.tools-container label:hover {
-    cursor: pointer;
-}
+  }
+  .tools-container button:hover,
+  .tools-container label:hover {
+      cursor: pointer;
+  }
+  @media (max-width: 700px) {
+    .list-container {
+      grid-template-rows: auto auto;
+    }
+    .tools-container {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+    .tools-container button,
+    .tools-container label,
+    .tools-container input[type="text"],
+    .tools-container .brush-size {
+      width: 100%;
+      padding: 10px;
+    }
+    #drawCanvas {
+      width: 100%;
+      height: auto;
+    }
+  }
 
   </style>
 </head>
@@ -124,12 +151,12 @@
 
   <nav class="navigations">
     <div class="nav-left navigations">
-        <a href="/" ><p><strong>Main Page</strong></p></a>
-        <img src="static/logo.png" class="logo-pic">
+        <a href="/" ><p>Main Page</p></a>
+        <img src="static/logo2.png" class="logo-pic">
     </div>
     <div class="nav-middle"></div>
     <div class="nav-right navigations">
-      <a href="/profile" ><img src="static/profpic.png" class="user-pic"></a>
+      <a href="/profile" ><img src="static/profile_user.png" class="user-pic"></a>
     </div>
   </nav>
 
@@ -240,13 +267,13 @@
           })
           .then(response => {
               if (response.ok) {
-                  console.log('Изображение успешно сохранено в базу данных.');
+                  console.log('Зображення успішно збережено в базу даних.');
               } else {
-                  console.error('Ошибка при сохранении изображения.');
+                  console.error('Помилка під час збереження зображення.');
               }
           })
           .catch(error => {
-              console.error('Ошибка при отправке запроса:', error);
+              console.error('Помилка під час надсилання запиту:', error);
           });
       });
   
@@ -296,7 +323,6 @@
       if (isSelecting) {
           canvas.style.cursor = `url('static/paint-solid-24.png'), auto`;
       } else {
-          // Возвращаем обычный курсор
           canvas.style.cursor = 'auto';
       }
   });
