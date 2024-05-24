@@ -65,12 +65,18 @@
                 width: 18px;
                 margin-right: 20px;
             }
+
             .choices a{
                 display: flex;
                 align-items: center;
                 margin-bottom: 20px;
+                margin-top: 10px;
                 width: fit-content;
                 flex-wrap: wrap;
+            }
+            .choices p{
+                align-items: center;
+                width: fit-content;
             }
             /*mainnnnnnnnnnnnnnnnnnnnn*/
             .container {
@@ -101,6 +107,9 @@
                 width: 100%;
                 border-radius: 5%;
             }
+            .project-list a img{
+                background: white;
+            }
             .project-list .navigations{
                 align-items: flex-start;
                 margin-top: 7px;
@@ -111,9 +120,12 @@
             .squeezedBar a p{
                 display: none;
             }
+            .squeezedBar p{
+                display: none;
+            }
             
             .nav-left .logo-pic {
-                width: 100px;
+                width: 130px;
             }
             
             @media (max-width:700px) {
@@ -145,7 +157,46 @@
                 .choices a p{
                     display: none;
                 }
+                .choices p{
+                    display: none;
+                }
                 
+            }
+            @media (max-width:690px) {
+                .menu-pic{
+                    display: none;
+                }
+                .leftBar{
+                    display: none;
+                }
+                .container .fullpage-container{
+                    padding-left: 5%;
+                    padding-right: 5%;
+                }
+                .nav-right img{
+                    display: none;
+                }
+                .nav-right .user-pic{
+                    display: block;
+                    width: 20px;
+                }
+                .nav-left .logo-pic{
+                    display: block;
+                    width: 50px;
+                }
+                .choices a .paint-pic{
+                    width: 20px;
+                    margin-left: 15px;
+                }
+                .choices a p{
+                    display: none;
+                }
+                .choices p{
+                    display: none;
+                }
+                .choices a img{
+                    display: none;
+                }
             }
         </style>
     </head>
@@ -153,19 +204,20 @@
         <nav class="navigations">
             <div class="nav-left navigations">
                 <img src="static/menu-regular-24.png" class="menu-pic">
-                <img src="static/logo.png" class="logo-pic">
+                <img src="static/logo2.png" class="logo-pic">
             </div>
             <div class="nav-middle"></div>
             <div class="nav-right navigations">
-                <a href="/profile" ><img src="static/profpic.png" class="user-pic"></a>
+                <a href="/profile" ><img src="static/profile_user.png" class="user-pic"></a>
             </div>
         </nav>
         <!-- sidebar-->
         <div class="leftbar">
             <div class="choices">
                 <a href="/drawCanwas"><img src="static/paint-regular-24.png" class="paint-pic"><p>Drawing Tool</p></a>
-                <a href=""><img src="static/envelope-regular-24.png" class="paint-pic"><p>Contact us</p></a>
-                <a href=""><img src="static/folder-open-regular-24.png" class="paint-pic"><p>Open project</p></a>
+                <p>Our social media:</p>
+                <a href="https://www.instagram.com/dimorii/"><img src="static/instagram-logo-24.png" class="paint-pic"><p>Instagram</p></a>
+                <a href="https://www.facebook.com/facebook/?locale=ru_RU"><img src="static/facebook-square-logo-24.png" class="paint-pic"><p>Facebook</p></a>
                 {% if current_name == 'admin' and current_email == 'admin@gmail.com' %}
                         <a class="paint-pic" href="/admin"><p>Admin Page</p></a>
                 {% endif %}
@@ -174,7 +226,7 @@
         <!-- main -->
         <div class="container">
             <div class="banner">
-                <img src="static/banner.png" class="banner-pic">
+                <img src="static/mainbanner.png" class="banner-pic">
             </div>
             <div class="list-container">
                 {% for drawing in drawings %}
