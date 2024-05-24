@@ -224,7 +224,7 @@ def change_password():
             user.password = new_password
             session.commit()
 
-            subject = "Відновлення паролю"
+            subject = "Пароль успішно змінено"
             sender = "kursac2024@gmail.com"
             recipients = [current_email]
             text_body = f"Ви змінили пароль.\nВаш новий пароль: {new_password}"
@@ -526,5 +526,5 @@ def get_user():
                             current_email=current_email)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
     app.secret_key = "secret"
