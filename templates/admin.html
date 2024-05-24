@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff;
+        /*background-color: #535353;*/
+    }
+    body{
+        background-color: #1b1b1b;
+    }
+    a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+    .navigations {
+        display: flex;
+        align-items: center;
+    }
+    nav {
+        padding: 10px 1%;
+        justify-content: space-between;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+        background: #535353;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    .nav-right img{
+        width: 25px;
+        margin-right: 25px;
+    }
+    .nav-right .user-pic{
+        width: 35px;
+        border-radius: 50%;
+        margin-right: 0;
+    }
+    .nav-left .menu-pic {
+        width: 22px;
+        margin-right: 25px;
+    }
+    .nav-left .logo-pic {
+        width: 100px;
+    }
+    .leftbar {
+        background: #323232;
+        width: 25%;
+        height: 100vh;
+        position: fixed;
+        padding-left: 1%;
+        padding-top: 80px;
+        top: 0;
+    }
+    .choices {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .choices a {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        width: fit-content;
+        font-size: 20px;
+    }
+
+    .choices a img {
+        width: 20px;
+        margin-right: 10px;
+    }
+    .choices h2 {
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    .leftbar {
+        background: #323232;
+        width: 25%;
+        height: 100vh;
+        position: fixed;
+        padding-left: 1%;
+        padding-top: 80px;
+        top: 0;
+    }
+
+    .profile-info {
+        text-align: center;
+        margin-right: 10px;
+    }
+
+    .profile-info .user-pic {
+        border-radius: 50%;
+        margin: 10px;
+        width: 150px;
+    }
+
+    .profile-info p {
+        margin: 20px 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        font-size: 20px;
+    }
+    .exit a {
+        display: flex;
+        align-items: center; 
+        width: fit-content;
+        margin: 0 auto; 
+        margin-bottom: 20px;
+        text-decoration: none; 
+    }
+    
+    .exit a p {
+        font-size: 22px;
+        margin: 0 0 0 10px;
+    }
+    
+    .exit a img {
+        width: 20px;
+    }
+    
+    .container {
+        background-color: #1b1b1b;
+        padding-left: 27%;
+        padding-right: 2%;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .container h1 {
+        font-size: 50px;
+        text-align: center;
+    }
+
+    .list-container {
+        margin-top: 30px;
+        display: grid;
+        grid-template-rows: 110px auto;
+        margin-top: 15px;
+        color: #000000;
+    }
+
+    .list-container .database {
+        background-color: #acacac;
+        color: #000000;
+    }
+
+    .list-container .database p{
+        color: #000000;
+    }
+
+    .button-container .buttons {
+        background-color:#535353;
+        color: #fff;
+        border:none;
+        border-radius:10px;
+        padding: 6px 24px;
+    }
+    .button-container  input[type=text] {
+        border: 2px solid #535353;
+        border-radius: 10px;
+        color: black;
+        padding: 4px 24px;
+        width: 400px;
+        margin-right: 30px;
+    }
+    .button-container {
+        display: flex;
+        gap: 15px;
+    }
+
+    .button-container form {
+        display: flex;
+        align-items: end;
+        margin-bottom: 40px;
+    }
+    .squeezedBar {
+        width: 3%;
+    }
+    .squeezedBar p{
+        display: none;
+    }
+    .squeezedBar h2{
+        display: none;
+    }
+    .squeezedBar .profile-info .user-pic {
+        width: 20px;
+        margin: 0px;
+        margin-bottom: 20px;
+
+    }
+    .fullpage-container {
+        padding-left: 4%;
+    }
+    @media screen and (max-width: 1000px) {
+        .list-container .database {
+            width: 80%;
+        }
+        .profile-info .user-pic {
+            width: 100px;
+            margin-top: 20px;
+            margin: 0px;
+            margin-bottom: 20px;
+
+        }
+    }
+    @media screen and (max-width: 700px) {
+        .list-container .database {
+            width: 60%;
+        }
+        .profile-info .user-pic {
+            width: 100px;
+            margin-top: 20px;
+            margin: 0px;
+            margin-bottom: 20px;
+
+        }
+    }
+    @media screen and (max-width: 100px) {
+        .list-container .database {
+            width: 60%;
+        }
+        .profile-info .user-pic {
+            width: 20px;
+            margin: 0px;
+            margin-bottom: 20px;
+
+        }
+    }
+</style>
+<body>
+    <nav class="navigations">
+        <div class="nav-left navigations">
+            <img src="static/menu-regular-24.png" class="menu-pic">
+            <img src="static/logo.png" class="logo-pic">
+        </div>
+        <div class="nav-middle">
+            <p><strong>Admin Panel</strong></p>
+        </div>
+        <div class="nav-right navigations">
+            <!--<img src="pictures/profpic.png" class="user-pic">-->
+        </div>
+    </nav>
+
+    <div class="leftbar">
+        <div class = "profile-info">
+            <h2 class="text-center">Profile Information</h2>
+            <img src="static/profpic.png" class="user-pic">
+            <p>Name: {{ current_name }}</p>
+            <p>Email: {{ current_email }} </p>
+        </div>
+        <div class="exit">
+        <a href="/log_in_or_out"><img src="static/exit-regular-24.png" class="paint-pic"><p><strong>Logout</strong></p></a>
+        </div>
+        <div class="choices">
+            <h2 class="text-center">Workspaces</h2>
+            <a href="/users_db"><img src="static/data-regular-24.png" class="paint-pic"><p>Users Data Base</p></a>
+            <a href="/pictures_db"><img src="static/data-regular-24.png" class="paint-pic"><p>Pictures Data Base</p></a>
+        </div>
+    </div>
+    <!-- main -->
+    <div class="container">
+        <h1>Admin Panel</h1>
+        <div class="list-container">
+            <div class="button-container">
+                <form action="/search" method="POST">
+                    <input type="text" name="id" placeholder="Enter id" id="search-id">
+                    <button class="buttons" type="submit">Search</button>
+                </form>
+                <form action="/delete" method="POST" onsubmit="setDeleteId()">
+                    <input type="hidden" name="id" id="delete-id">
+                    <button class="buttons" type="submit">Delete</button>
+                </form>
+            </div>
+                <div class ="database">
+                    {% if data_type == 'users' %}
+                        {% for user in users %}
+                            <p>Id: {{ user.id }} Name: {{ user.name }} Email: {{ user.email }}</p>
+                        {% endfor %}
+                    {% elif data_type == 'user' %}
+                        <p>Id: {{ user.id }} Name: {{ user.name }} Email: {{ user.email }}</p>
+                    {% elif data_type == 'picture' %}
+                        <p>Id: {{ picture.id }} Name: {{ picture.name }} User: {{ picture.user.name }}</p>  
+                    {% elif data_type == 'pictures' %}
+                        {% for picture in pictures %}
+                            <p>Id: {{ picture.id }} Name: {{ picture.name }} User: {{ picture.user.name }}</p>
+                        {% endfor %}
+                    {% else %}
+                        
+                    {% endif %}
+                </div>
+        </div>
+
+    </div>
+    <script>
+        let menuPic = document.querySelector(".menu-pic");
+        let leftBar = document.querySelector(".leftbar");
+        let pageContainer = document.querySelector(".container");
+        menuPic.onclick = function() {
+            leftBar.classList.toggle("squeezedBar");
+            pageContainer.classList.toggle("fullpage-container");
+        }
+    </script>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    });
+
+    function setDeleteId() {
+            const searchId = document.getElementById('search-id').value;
+            document.getElementById('delete-id').value = searchId;
+    }
+</script>
+</html>

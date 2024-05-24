@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw Page</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
+      /*background-color: #535353;*/
+  }
+  body{
+    background-color: #1b1b1b;
+}
+  .navigations {
+    display: flex;
+    align-items: center;
+  }
+  nav {
+    padding: 10px 1%;
+    justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    background: #535353;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav-left .logo-pic {
+    width: 100px;
+    margin-left: 20px;
+  }
+  .nav-right img{
+      width: 25px;
+      margin-right: 25px;
+  }
+  .nav-right .user-pic{
+      width: 35px;
+      border-radius: 50%;
+      margin-right: 0;
+  }
+  .nav-left .menu-pic {
+      width: 22px;
+      margin-right: 25px;
+  }
+  .container {
+    background-color: #1b1b1b;
+    padding-left: 3%;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .list-container {
+      margin-top: 30px;
+      display: grid;
+      grid-template-rows: 70px auto;
+      margin-top: 15px;
+      color: #000000;
+  }
+
+  .list-container .drawing-tool{
+      background-color: #ffffff;
+      color: #000000;
+  }
+
+  .list-container .drawing-tool p{
+      color: #000000;
+  }
+    /* Скрываем текст внутри input type="file" */
+    input[type="file"] {
+      display: none;
+    }
+    
+  .tools-container {
+      display: flex;
+      gap: 15px;
+  }
+  .tools-container button {
+    background-color:#535353;
+    color: #fff;
+    border:none;
+    border-radius:10px;
+    padding: 6px 28px;
+    margin-bottom: 30px;
+  }
+  .tools-container label {
+    background-color: #535353;
+    border-radius: 10px;
+    padding: 12px 12px;
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+  .tools-container .brush-size {
+    padding: 6px 24px;
+    margin-bottom: 30px;
+  }
+  .tools-container .color-picker {
+    margin-top: 6px;
+  }
+  .tools-container  input[type=text] {
+      border: 2px solid #535353;
+      border-radius: 10px;
+      color: black;
+      padding: 4px 24px;
+      width: 400px;
+
+      margin-bottom: 30px;
+  }
+  a {
+    text-decoration: none;
+}
+.tools-container button:hover,
+.tools-container label:hover {
+    cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+
+  <nav class="navigations">
+    <div class="nav-left navigations">
+        <a href="/" ><p><strong>Main Page</strong></p></a>
+        <img src="static/logo.png" class="logo-pic">
+    </div>
+    <div class="nav-middle"></div>
+    <div class="nav-right navigations">
+      <a href="/profile" ><img src="static/profpic.png" class="user-pic"></a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="list-container">
+      <div class="tools-container">
+        <input type="text" class="filename-input" id="filename" placeholder="Enter filename" {% if image_path %}style="display: none;"{% endif %}>
+        <button id="saveButton" class="btn btn-primary ml-2 btn-hover">Save</button>
+        <input type="color" class="color-picker" id="colorPicker" value="#000000">
+        <button id="selectButton" class="btn btn-primary ml-2 btn-hover">Paint</button>
+        <input type="range" class ="brush-size" id="brushSize" min="1" max="50" value="5">
+        <button id="clearButton" class="btn btn-primary ml-2 btn-hover">Clear</button>
+        <button id="eraserButton" class="btn btn-primary ml-2 btn-hover">Eraser</button>
+        <label for="imageUpload" class="custom-file-upload">Upload Image</label>
+        <input type="file" id="imageUpload" accept="image/*">
+      </div>
+      <canvas id="drawCanvas" class = "drawing-tool" width="1400" height="550"></canvas>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const canvas = document.getElementById("drawCanvas");
+      const context = canvas.getContext("2d");
+      const colorPicker = document.getElementById("colorPicker");
+      const clearButton = document.getElementById("clearButton");
+      const saveButton = document.getElementById("saveButton");
+      const imageUpload = document.getElementById("imageUpload");
+      const filenameInput = document.getElementById("filename");
+      const eraserButton = document.getElementById("eraserButton");
+      const selectButton = document.getElementById("selectButton");
+      const brushSizeInput = document.getElementById("brushSize");
+      const urlParams = new URLSearchParams(window.location.search);
+      const imagePath = urlParams.get('image_path');
+      const imageName = urlParams.get('image_name');
+      
+      const img = new Image();
+      img.onload = function() {
+          context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+      img.src = imagePath;
+  
+      let isDrawing = false;
+      let isErasing = false;
+      let isSelecting = false;
+      let selectionStartX = 0;
+      let selectionStartY = 0;
+      let selectionWidth = 0;
+      let selectionHeight = 0;
+      let lastX = 0;
+      let lastY = 0;
+      let selectedImage = null;
+  
+      function draw(e) {
+          if (!isDrawing) return;
+          context.strokeStyle = isErasing ? "#FFFFFF" : colorPicker.value;
+          context.lineWidth = brushSizeInput.value;
+          context.lineCap = "round";
+          context.beginPath();
+          context.moveTo(lastX, lastY);
+          context.lineTo(e.offsetX, e.offsetY);
+          context.stroke();
+          [lastX, lastY] = [e.offsetX, e.offsetY];
+      }
+  
+      canvas.addEventListener("mousedown", (e) => {
+          isDrawing = true;
+          [lastX, lastY] = [e.offsetX, e.offsetY];
+      });
+  
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mouseup", () => isDrawing = false);
+      canvas.addEventListener("mouseout", () => isDrawing = false);
+  
+      canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect x="0" y="0" width="1" height="1" fill="${colorPicker.value}"/></svg>') 0 0, auto`;
+  
+      colorPicker.addEventListener("input", function() {
+          if (!isErasing && !isSelecting) {
+              canvas.style.cursor = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect x="0" y="0" width="1" height="1" fill="${colorPicker.value}"/></svg>') 0 0, auto`;
+          }
+      });
+  
+      clearButton.addEventListener("click", function() {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+      });
+  
+      saveButton.addEventListener("click", function() {
+          const url = canvas.toDataURL();
+          const filename = filenameInput.value.trim() || "my_drawing";
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = filename;
+          link.click();
+  
+          const formData = new FormData();
+          const blob = dataURLtoBlob(url);
+          formData.append('image', blob, filename);
+          formData.append('imagePath', imagePath);
+          formData.append('imageName', imageName);
+  
+          fetch('/save_image', {
+              method: 'POST',
+              body: formData,
+          })
+          .then(response => {
+              if (response.ok) {
+                  console.log('Изображение успешно сохранено в базу данных.');
+              } else {
+                  console.error('Ошибка при сохранении изображения.');
+              }
+          })
+          .catch(error => {
+              console.error('Ошибка при отправке запроса:', error);
+          });
+      });
+  
+      function dataURLtoBlob(dataURL) {
+          const parts = dataURL.split(';base64,');
+          const contentType = parts[0].split(':')[1];
+          const raw = window.atob(parts[1]);
+          const rawLength = raw.length;
+          const uInt8Array = new Uint8Array(rawLength);
+          for (let i = 0; i < rawLength; ++i) {
+              uInt8Array[i] = raw.charCodeAt(i);
+          }
+          return new Blob([uInt8Array], { type: contentType });
+      }
+  
+      imageUpload.addEventListener("change", function(event) {
+          const file = event.target.files[0];
+          if (!file) return;
+          
+          const reader = new FileReader();
+          reader.onload = function(event) {
+              const img = new Image();
+              img.onload = function() {
+                  context.clearRect(0, 0, canvas.width, canvas.height);
+                  context.drawImage(img, 0, 0, canvas.width, canvas.height);
+                  selectedImage = img;
+              }
+              img.src = event.target.result;
+          }
+          reader.readAsDataURL(file);
+      });
+  
+      eraserButton.addEventListener("click", function() {
+        isErasing = !isErasing;
+        isSelecting = false;
+        if (isErasing) {
+            canvas.style.cursor = `url('static/eraser-regular-24.png'), auto`;
+        } else {
+            canvas.style.cursor = 'auto';
+        }
+    });
+    
+  
+    selectButton.addEventListener("click", function() {
+      isSelecting = !isSelecting;
+      isErasing = false;
+      if (isSelecting) {
+          canvas.style.cursor = `url('static/paint-solid-24.png'), auto`;
+      } else {
+          // Возвращаем обычный курсор
+          canvas.style.cursor = 'auto';
+      }
+  });
+  
+  
+      brushSizeInput.addEventListener("input", function() {
+          context.lineWidth = this.value;
+      });
+    });
+  </script>   
+</body>
+</html>

@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="/">Main Page</a>
+  {% if current_name == 'admin' and current_email == 'admin@gmail.com' %}
+          <a class="navbar-brand" href="/admin">Admin Page</a>
+  {% endif %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+          <a class="navbar-brand" href="/drawCanwas" style="margin-top: 5px;">Drawing Tool</a>
+          <li class="nav-item">
+              <a class="nav-link profile-icon" href="/profile"><i class="fas fa-user"></i></a>
+          </li>
+      </ul>
+  </div>
+</nav>

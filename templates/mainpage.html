@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible", content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styleee.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <title>Main Page</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+                color: #ffffff;
+            }
+            body{
+                background: #1b1b1b; 
+            }
+            a {
+                text-decoration: none;
+                color: #ffffff;
+            }
+            img {
+                cursor: pointer;
+            }
+            .navigations {
+                display: flex;
+                align-items: center;
+            }
+            nav {
+                padding: 10px 1%;
+                justify-content: space-between;
+                box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+                background: #535353;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+            }
+            .nav-right img{
+                width: 25px;
+                margin-right: 25px;
+            }
+            .nav-right .user-pic{
+                width: 35px;
+                border-radius: 50%;
+                margin-right: 0;
+            }
+            .nav-left .menu-pic {
+                width: 22px;
+                margin-right: 25px;
+            }
+            /*siiiiiiiiiiiiiiiidebarrrrrrrrrrr*/
+            .leftbar {
+                background: #323232;
+                width: 13%;
+                height: 100vh;
+                position: fixed;
+                padding-left: 1%;
+                padding-top: 80px;
+                top: 0;
+            }
+            .choices a img{
+                width: 18px;
+                margin-right: 20px;
+            }
+            .choices a{
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                width: fit-content;
+                flex-wrap: wrap;
+            }
+            /*mainnnnnnnnnnnnnnnnnnnnn*/
+            .container {
+                background: #1b1b1b;
+                padding-left: 17%;
+                padding-right: 1%;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .fullpage-container {
+                padding-left: 4%;
+            }
+            .banner {
+                width: 100%;  
+            }
+            .banner img{
+                width: 100%; 
+                border-radius: 8px; 
+            }
+            .list-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                grid-column-gap: 16px;
+                grid-row-gap: 30px;
+                margin-top: 15px;
+            }
+            .project-list .proj-pic{
+                width: 100%;
+                border-radius: 5%;
+            }
+            .project-list .navigations{
+                align-items: flex-start;
+                margin-top: 7px;
+            }
+            .squeezedBar {
+                width: 3%;
+            }
+            .squeezedBar a p{
+                display: none;
+            }
+            
+            .nav-left .logo-pic {
+                width: 100px;
+            }
+            
+            @media (max-width:700px) {
+                .menu-pic{
+                    display: none;
+                }
+                .leftBar{
+                    display: none;
+                }
+                .container .fullpage-container{
+                    padding-left: 5%;
+                    padding-right: 5%;
+                }
+                .nav-right img{
+                    display: none;
+                }
+                .nav-right .user-pic{
+                    display: block;
+                    width: 20px;
+                }
+                .nav-left .logo-pic{
+                    display: block;
+                    width: 50px;
+                }
+                .choices a .paint-pic{
+                    width: 20px;
+                    margin-left: 15px;
+                }
+                .choices a p{
+                    display: none;
+                }
+                
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navigations">
+            <div class="nav-left navigations">
+                <img src="static/menu-regular-24.png" class="menu-pic">
+                <img src="static/logo.png" class="logo-pic">
+            </div>
+            <div class="nav-middle"></div>
+            <div class="nav-right navigations">
+                <a href="/profile" ><img src="static/profpic.png" class="user-pic"></a>
+            </div>
+        </nav>
+        <!-- sidebar-->
+        <div class="leftbar">
+            <div class="choices">
+                <a href="/drawCanwas"><img src="static/paint-regular-24.png" class="paint-pic"><p>Drawing Tool</p></a>
+                <a href=""><img src="static/envelope-regular-24.png" class="paint-pic"><p>Contact us</p></a>
+                <a href=""><img src="static/folder-open-regular-24.png" class="paint-pic"><p>Open project</p></a>
+                {% if current_name == 'admin' and current_email == 'admin@gmail.com' %}
+                        <a class="paint-pic" href="/admin"><p>Admin Page</p></a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- main -->
+        <div class="container">
+            <div class="banner">
+                <img src="static/banner.png" class="banner-pic">
+            </div>
+            <div class="list-container">
+                {% for drawing in drawings %}
+                <div class="project-list">
+                    <a href="/drawCanwas?image_path={{ drawing.path }}&image_name={{ drawing.name }}"><img src="{{ drawing.path }}" class="proj-pic"></a>
+                    <div class="navigations">
+                        <div class="proj-info">
+                            <p>Project name: <a href="/drawCanwas?image_path={{ drawing.path }}&image_name={{ drawing.name }}">{{ drawing.name }}</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>          
+        </div>
+    <script>
+        let menuPic = document.querySelector(".menu-pic");
+        let leftBar = document.querySelector(".leftbar");
+        let pageContainer = document.querySelector(".container");
+        menuPic.onclick = function() {
+            leftBar.classList.toggle("squeezedBar");
+            pageContainer.classList.toggle("fullpage-container");
+        }
+        
+    </script>
+    </body>
+</html>
