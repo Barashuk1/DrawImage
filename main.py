@@ -385,7 +385,7 @@ def save_image():
                 session.commit()
         elif len(pictures) > 1:
             for picture in pictures:
-                if pictures[0].name == old_image_name:
+                if picture.name == old_image_name:
                     picture = session.query(Picture).filter(Picture.path == old_image_path).first()
                     os.remove(old_image_path)
                     session.delete(picture)

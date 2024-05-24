@@ -235,10 +235,10 @@
             <div class="list-container">
                 {% for drawing in drawings %}
                 <div class="project-list">
-                    <a href="/drawCanwas?image_path={{ drawing.path }}&image_name={{ drawing.name }}"><img src="{{ drawing.path }}" class="proj-pic"></a>
+                    <a id="drawing-link" href="/drawCanwas?image_path={{ drawing.path }}&image_name={{ drawing.name }}"><img src="{{ drawing.path }}" class="proj-pic"></a>
                     <div class="navigations">
                         <div class="proj-info">
-                            <p>Project name: <a href="/drawCanwas?image_path={{ drawing.path }}&image_name={{ drawing.name }}">{{ drawing.name }}</a></p>
+                            <p>Project name: <a id="drawing-link" href="/drawCanwas?image_path={{ drawing.path }}&image_name={{ drawing.name }}">{{ drawing.name }}</a></p>
                         </div>
                     </div>
                 </div>
