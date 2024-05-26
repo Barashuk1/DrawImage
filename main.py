@@ -37,7 +37,7 @@ def is_valid_password(password):
 
 @app.route('/send-email')
 def send_test_email(receiver, password):
-    subject = "Успішна регістрація"
+    subject = "Успішна реєстрація"
     sender = "kursac2024@gmail.com"
     recipients = [f"{receiver}",]
     text_body = f"Ви успішно зареєструвались.\nВаш логін та пароль:\n{receiver}\n{password}"
